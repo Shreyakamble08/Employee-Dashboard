@@ -1,0 +1,70 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #355872;
+    --primary-light: #4D7A9B;
+    --primary-lighter: #7AAACE;
+    --primary-lightest: #9CD5FF;
+    --bg-light: #F7F8F0;
+    --bg-body: #F5F2F2;
+    --text-dark: #2C3E4E;
+    --text-light: #6F8FAA;
+    --white: #FFFFFF;
+    --border-color: #E2E8F0;
+    --success-color: #2E6B47;
+    --danger-color: #C7362B;
+    --warning-color: #F39C12;
+    --sidebar-width: 260px;
+    --sidebar-collapsed-width: 80px;
+    --header-height: 70px;
+    --shadow-sm: 0 2px 4px rgba(53, 88, 114, 0.05);
+    --shadow-md: 0 4px 12px rgba(53, 88, 114, 0.08);
+    --shadow-lg: 0 10px 25px rgba(53, 88, 114, 0.12);
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-dark);
+    line-height: 1.5;
+    overflow-x: hidden;
+}
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    transition: var(--transition);
+    min-height: 100vh;
+    background: var(--bg-body);
+}
+
+.main-content.sidebar-collapsed {
+    margin-left: var(--sidebar-collapsed-width);
+}
+
+.content-wrapper {
+    padding: calc(var(--header-height) + 20px) 24px 24px 24px;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0 !important;
+    }
+    
+    .content-wrapper {
+        padding: calc(var(--header-height) + 16px) 16px 16px 16px;
+    }
+}

@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Employee Portal | Secure Login</title>
+  <!-- Google Fonts: Inter & Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #F5F2F2;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.2rem;
+      position: relative;
+    }
+
+    /* subtle backdrop */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 20% 30%, rgba(53,88,114,0.05) 0%, rgba(156,213,255,0.08) 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* main container - REDUCED HEIGHT */
+    .login-container {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 440px;
+      background: #F7F8F0;   /* theme F7F8F0 */
+      border-radius: 1.75rem;
+      box-shadow: 0 20px 35px -10px rgba(53, 88, 114, 0.3), 0 4px 12px rgba(0,0,0,0.05);
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s;
+    }
+
+    .login-container:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 24px 40px -12px rgba(53, 88, 114, 0.35);
+    }
+
+    /* compact header - reduced padding and smaller elements */
+    .brand-header {
+      background: #355872;   /* deep theme color */
+      padding: 1rem 1.5rem 0.9rem 1.5rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .brand-header .logo-circle {
+      background: rgba(247, 248, 240, 0.12);
+      width: 52px;
+      height: 52px;
+      margin: 0 auto 0.6rem auto;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(2px);
+      border: 1px solid rgba(255,255,240,0.2);
+    }
+
+    .brand-header .logo-circle i {
+      font-size: 1.8rem;
+      color: #F7F8F0;
+    }
+
+    .brand-header h1 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 1.4rem;
+      letter-spacing: -0.2px;
+      color: #F7F8F0;
+      margin-bottom: 0.15rem;
+    }
+
+    .brand-header p {
+      color: rgba(247, 248, 240, 0.8);
+      font-size: 0.7rem;
+      font-weight: 400;
+    }
+
+    /* form body - compact spacing */
+    .form-body {
+      padding: 1.2rem 1.5rem 1.5rem 1.5rem;
+    }
+
+    /* input groups with reduced margins */
+    .input-group {
+      margin-bottom: 1.1rem;
+      position: relative;
+    }
+
+    .input-group label {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-weight: 600;
+      font-size: 0.75rem;
+      margin-bottom: 0.4rem;
+      color: #2C3E4E;
+      letter-spacing: -0.2px;
+    }
+
+    .input-group label i {
+      color: #7AAACE;
+      font-size: 0.8rem;
+      width: 1rem;
+    }
+
+    .input-field {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-field i.field-icon {
+      position: absolute;
+      left: 0.9rem;
+      color: #7AAACE;
+      font-size: 0.9rem;
+      pointer-events: none;
+    }
+
+    .input-field input {
+      width: 100%;
+      padding: 0.65rem 0.8rem 0.65rem 2.3rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      font-family: 'Inter', monospace;
+      background: #FFFFFF;
+      border: 1.5px solid #E2E8F0;
+      border-radius: 1rem;
+      outline: none;
+      transition: all 0.2s ease;
+      color: #1F2A3A;
+    }
+
+    .input-field input:focus {
+      border-color: #9CD5FF;
+      box-shadow: 0 0 0 3px rgba(156, 213, 255, 0.25);
+    }
+
+    .input-field input:hover {
+      border-color: #7AAACE;
+    }
+
+    /* password toggle button */
+    .password-toggle {
+      position: absolute;
+      right: 0.8rem;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: #7AAACE;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .password-toggle:hover {
+      color: #355872;
+    }
+
+    /* options row - more compact */
+    .form-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0.3rem 0 1.2rem 0;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: #2D4A62;
+      cursor: pointer;
+    }
+
+    .checkbox-label input {
+      accent-color: #355872;
+      width: 0.85rem;
+      height: 0.85rem;
+      margin: 0;
+      cursor: pointer;
+    }
+
+    .forgot-link {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: #7AAACE;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .forgot-link:hover {
+      color: #355872;
+      text-decoration: underline;
+    }
+
+    /* login button - compact but punchy */
+    .login-btn {
+      width: 100%;
+      background: linear-gradient(105deg, #355872 0%, #4D7A9B 100%);
+      border: none;
+      padding: 0.7rem 0.8rem;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      border-radius: 2rem;
+      color: #F7F8F0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 10px rgba(53, 88, 114, 0.25);
+    }
+
+    .login-btn i {
+      font-size: 0.85rem;
+      transition: transform 0.2s;
+    }
+
+    .login-btn:hover {
+      background: linear-gradient(105deg, #2A465C 0%, #3D6887 100%);
+      transform: scale(1.01);
+      box-shadow: 0 6px 14px rgba(53, 88, 114, 0.35);
+    }
+
+    .login-btn:hover i {
+      transform: translateX(3px);
+    }
+
+    /* demo note - reduced */
+    .demo-note {
+      margin-top: 1rem;
+      text-align: center;
+      font-size: 0.65rem;
+      color: #6F8FAA;
+      background: rgba(156, 213, 255, 0.2);
+      padding: 0.5rem;
+      border-radius: 1rem;
+      border: 1px solid rgba(122, 170, 206, 0.2);
+    }
+
+    .demo-note span {
+      font-weight: 700;
+      color: #355872;
+    }
+
+    hr {
+      margin: 0.8rem 0 0.4rem;
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, #9CD5FF, #7AAACE, #9CD5FF);
+      opacity: 0.4;
+    }
+
+    .message-area {
+      margin-top: 0.7rem;
+      font-size: 0.7rem;
+      text-align: center;
+      font-weight: 500;
+      padding: 0.35rem;
+      border-radius: 1rem;
+      transition: all 0.2s;
+    }
+
+    .error-message {
+      background: #FFEFEF;
+      color: #C7362B;
+      border-left: 3px solid #C7362B;
+    }
+
+    .success-message {
+      background: #E3F5EC;
+      color: #2E6B47;
+      border-left: 3px solid #2E6B47;
+    }
+
+    @media (max-width: 480px) {
+      .form-body {
+        padding: 1rem 1.2rem 1.2rem;
+      }
+      .brand-header {
+        padding: 0.8rem 1rem 0.7rem;
+      }
+      .brand-header h1 {
+        font-size: 1.2rem;
+      }
+      .brand-header .logo-circle {
+        width: 44px;
+        height: 44px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="login-container">
+  <div class="brand-header">
+    <div class="logo-circle">
+      <i class="fas fa-briefcase"></i>
+    </div>
+    <h1>Employee Portal</h1>
+    <p>secure dashboard access</p>
+  </div>
+  <div class="form-body">
+    <form id="employeeLoginForm" action="#" method="POST">
+      <!-- Employee ID field -->
+      <div class="input-group">
+        <label><i class="fas fa-id-card"></i> Employee ID</label>
+        <div class="input-field">
+          <i class="fas fa-user-circle field-icon"></i>
+          <input type="text" id="empId" name="employee_id" placeholder="e.g., 355872" autocomplete="username" required>
+        </div>
+      </div>
+
+      <!-- Password field with toggle -->
+      <div class="input-group">
+        <label><i class="fas fa-lock"></i> Password</label>
+        <div class="input-field">
+          <i class="fas fa-key field-icon"></i>
+          <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password" required>
+          <button type="button" class="password-toggle" id="togglePasswordBtn" aria-label="Show password">
+            <i class="far fa-eye-slash" id="toggleIcon"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Options: remember & forgot -->
+      <div class="form-options">
+        <label class="checkbox-label">
+          <input type="checkbox" id="rememberCheck"> <span>Keep me signed in</span>
+        </label>
+        <a href="#" class="forgot-link" id="forgotMockLink"><i class="fas fa-question-circle"></i> Forgot?</a>
+      </div>
+
+      <!-- Login button -->
+      <button type="submit" class="login-btn" id="loginBtn">
+        <span>Access Dashboard</span>
+        <i class="fas fa-arrow-right-to-bracket"></i>
+      </button>
+
+      <div id="formFeedback" class="message-area"></div>
+      <hr>
+      <div class="demo-note">
+        <i class="fas fa-flask"></i> <span>Demo</span> ID: <strong>355872</strong> / Pass: <strong>dashboard123</strong>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const form = document.getElementById('employeeLoginForm');
+    const empIdInput = document.getElementById('empId');
+    const passwordInput = document.getElementById('password');
+    const toggleBtn = document.getElementById('togglePasswordBtn');
+    const toggleIcon = document.getElementById('toggleIcon');
+    const rememberCheckbox = document.getElementById('rememberCheck');
+    const feedbackDiv = document.getElementById('formFeedback');
+    const forgotLink = document.getElementById('forgotMockLink');
+
+    function showMessage(message, isError = true) {
+      feedbackDiv.innerHTML = message;
+      feedbackDiv.className = `message-area ${isError ? 'error-message' : 'success-message'}`;
+      setTimeout(() => {
+        if (feedbackDiv.innerHTML === message) {
+          feedbackDiv.innerHTML = '';
+          feedbackDiv.className = 'message-area';
+        }
+      }, 3500);
+    }
+
+    function clearFeedback() {
+      if (feedbackDiv.innerHTML.trim() !== '') {
+        feedbackDiv.innerHTML = '';
+        feedbackDiv.className = 'message-area';
+      }
+    }
+    empIdInput.addEventListener('input', clearFeedback);
+    passwordInput.addEventListener('input', clearFeedback);
+
+    // Toggle password visibility
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        if (type === 'text') {
+          toggleIcon.classList.remove('fa-eye-slash');
+          toggleIcon.classList.add('fa-eye');
+        } else {
+          toggleIcon.classList.remove('fa-eye');
+          toggleIcon.classList.add('fa-eye-slash');
+        }
+      });
+    }
+
+    // Forgot link demo message
+    forgotLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      showMessage('📧 Use demo: ID 355872 | pass dashboard123', false);
+      setTimeout(() => {
+        if (feedbackDiv.innerHTML.includes('demo')) feedbackDiv.innerHTML = '';
+      }, 4000);
+    });
+
+    // Load saved credentials if "remember me" was active
+    function loadRemembered() {
+      const savedId = localStorage.getItem('emp_remember_id');
+      const savedPwd = localStorage.getItem('emp_remember_pass');
+      const savedFlag = localStorage.getItem('emp_remember_flag');
+      if (savedFlag === 'true' && savedId) {
+        empIdInput.value = savedId;
+        if (savedPwd) passwordInput.value = savedPwd;
+        rememberCheckbox.checked = true;
+      }
+    }
+
+    function persistRemember(empId, pwd, remember) {
+      if (remember) {
+        localStorage.setItem('emp_remember_id', empId);
+        localStorage.setItem('emp_remember_pass', pwd);
+        localStorage.setItem('emp_remember_flag', 'true');
+      } else {
+        localStorage.removeItem('emp_remember_id');
+        localStorage.removeItem('emp_remember_pass');
+        localStorage.setItem('emp_remember_flag', 'false');
+      }
+    }
+
+    loadRemembered();
+
+    // Handle login - redirect to dashboard.html
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const employeeId = empIdInput.value.trim();
+      const password = passwordInput.value.trim();
+
+      if (employeeId === "") {
+        showMessage("❌ Please enter Employee ID.", true);
+        empIdInput.focus();
+        return;
+      }
+      if (password === "") {
+        showMessage("❌ Password is required.", true);
+        passwordInput.focus();
+        return;
+      }
+
+      const validEmployeeId = "355872";
+      const validPassword = "dashboard123";
+
+      if (employeeId === validEmployeeId && password === validPassword) {
+        // Save remember me preference
+        if (rememberCheckbox.checked) {
+          persistRemember(employeeId, password, true);
+        } else {
+          persistRemember('', '', false);
+        }
+        
+        // Store authentication flag and employee data for dashboard
+        localStorage.setItem('hrms_auth_token', 'authenticated_' + Date.now());
+        localStorage.setItem('hrms_employee_id', employeeId);
+        localStorage.setItem('hrms_employee_name', 'Alex Mercer');
+        localStorage.setItem('hrms_employee_email', 'alex.mercer@hrms.com');
+        localStorage.setItem('hrms_employee_role', 'Senior Developer');
+        
+        showMessage(`✅ Welcome ${employeeId}! Redirecting to dashboard...`, false);
+        
+        // Disable login button during redirect
+        const submitBtn = form.querySelector('.login-btn');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Redirecting...';
+        
+        // Redirect to dashboard.html after short delay
+        setTimeout(() => {
+          window.location.href = '/pages/dashboard.html';
+        }, 800);
+      } else {
+        showMessage(`🔐 Access denied. Use ID: ${validEmployeeId}`, true);
+        passwordInput.value = '';
+        passwordInput.focus();
+        const btn = form.querySelector('.login-btn');
+        if (btn.disabled) btn.disabled = false;
+      }
+    });
+  })();
+</script>
+</body>
+</html>
