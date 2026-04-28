@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>HRMS | Company Policies</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Poppins:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Toastify CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <link rel="stylesheet" href="../css/policy.css">
+
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-briefcase"></i>
+                    <span class="logo-text">Employee Portal</span>
+                </div>
+
+                <button class="collapse-btn" id="collapseSidebarBtn" aria-label="Toggle sidebar">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul class="nav-menu">
+                    <li>
+                        <a href="../pages/dashboard.html" class="nav-link"><i class="fas fa-chart-pie"></i><span
+                                class="nav-text">Dashboard</span></a>
+                    </li>
+                    <li>
+                        <a href="../pages/profile.html" class="nav-link"><i class="fas fa-user"></i><span
+                                class="nav-text">Profile</span></a>
+                    </li>
+                    <li>
+                        <a href="../pages/attendance.html" class="nav-link"><i class="fas fa-clock"></i><span
+                                class="nav-text">Attendance</span></a>
+                    </li>
+                    <li>
+                        <a href="../pages/expenses.html" class="nav-link"><i class="fas fa-money-bill"></i><span
+                                class="nav-text">Expenses</span></a>
+                    </li>
+                    <li>
+                        <a href="../pages/leave.html" class="nav-link"><i class="fas fa-umbrella-beach"></i><span
+                                class="nav-text">Leave</span></a>
+                    </li>
+                    <li>
+                        <a href="../pages/payroll.html" class="nav-link"><i class="fas fa-money-bill-wave"></i><span
+                                class="nav-text">Payroll</span></a>
+                    </li>
+                    <li>
+                        <a href="../pages/policies.html" class="nav-link active"><i
+                                class="fas fa-file-contract"></i><span class="nav-text">Company Policies</span></a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i><span class="nav-text">Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <div class="main-content" id="mainContent">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-toggle" id="mobileToggleBtn"><i class="fas fa-bars"></i></button>
+                    <div class="page-title">Policy Hub</div>
+                </div>
+                <div class="header-right">
+                    <div class="notification-bell"><button class="icon-btn"><i class="far fa-bell"></i><span
+                                class="notification-badge">3</span></button></div>
+                    <div class="user-profile">
+                        <button class="profile-btn" id="profileDropdownBtn">
+                            <div class="avatar">AM</div>
+                            <div class="user-info">
+                                <div class="user-name">Alex Mercer</div>
+                                <div class="user-role">Senior Developer</div>
+                            </div>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="profile-dropdown" id="profileDropdown">
+                            <a href="#" class="dropdown-item"><i class="fas fa-user-circle"></i><span>My
+                                    Profile</span></a>
+                            <div class="dropdown-divider"></div>
+                            <button class="dropdown-item logout-item"><i
+                                    class="fas fa-sign-out-alt"></i><span>Logout</span></button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <div class="page-header">
+                    <h1><i class="fas fa-file-contract"></i> Company Policies</h1>
+                </div>
+
+                <div class="tabs-container">
+                    <div class="tabs" id="tabsContainer"></div>
+                </div>
+
+                <div id="contentArea"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/policy.js"></script>
+
+</body>
+
+</html>
