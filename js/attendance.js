@@ -286,6 +286,157 @@
     
     document.getElementById('logoutBtn')?.addEventListener('click', () => { if(confirm("Logout?")) showToast("Logged out", "success"); });
     
+
+//table functionality 
+   // Enhanced renderTable function with view button
+                    function renderTable(records) {
+                        let fromDate = document.getElementById('filterDateFrom').value;
+                        let toDate = document.getElementById('filterDateTo').value;
+                        let statusFilter = document.getElementById('filterStatus').value;
+                        let filtered = [...records];
+
+                        if (fromDate) filtered = filtered.filter(r => r.date >= fromDate);
+                        if (toDate) filtered = filtered.filter(r => r.date <= toDate);
+                        if (statusFilter !== 'all') filtered = filtered.filter(r => r.status === statusFilter);
+
+                        const tbody = document.getElementById('attendanceTableBody');
+                        if (filtered.length === 0) {
+                            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No attendance records found</td></tr>';
+                            return;
+                        }
+
+                        tbody.innerHTML = filtered.map((rec, index) => `
+        <tr>
+            <td>${rec.date}</td>
+            <td><strong>${rec.checkIn ? formatTimeFromDate(rec.checkIn) : "--:--"}</strong></td>
+            <td>${rec.checkOut ? formatTimeFromDate(rec.checkOut) : "--:--"}</td>
+            <td>${rec.hours ? rec.hours.toFixed(1) : "0.0"} hrs</td>
+            <td><span class="status-badge-table" style="background:${getStatusColor(rec.status)}20; color:${getStatusColor(rec.status)}">${rec.status}</span></td>
+            <td><button class="btn-view-detail" data-date="${rec.date}"><i class="fas fa-eye"></i> View</button></td>
+        </tr>
+    `).join('');
+
+                        // Add event listeners to view buttons
+                        document.querySelectorAll('.btn-view-detail').forEach(btn => {
+                            btn.addEventListener('click', (e) => {
+                                const date = btn.dataset.date;
+                                showMonthlyViewForDate(date);
+                            });
+                        });
+                    }
+
+                    // Monthly view functions
+                    let currentViewDate = null;
+
+                    function showMonthlyViewForDate(date) {
+                        const [year, month] = date.split('-');
+                        currentViewDate = { year: parseInt(year), month: parseInt(month) };
+                        loadMonthlySummary(currentViewDate.year, currentViewDate.month);
+                    }
+
+                    function loadMonthlySummary(year, month) {
+                        const records = loadRecords();
+                        const monthRecords = records.filter(rec => {
+                            const [recYear, recMonth] = rec.date.split('-');
+                            return parseInt(recYear) === year && parseInt(recMonth) === (month + 1);
+                        });
+
+                        // Calculate statistics
+                        const daysInMonth = new Date(year, month + 1, 0).getDate();
+                        const presentDays = monthRecords.filter(r => r.status === 'Present' && r.hours >= 4).length;
+                        const absentDays = daysInMonth - monthRecords.length;
+                        const lateDays = monthRecords.filter(r => r.status === 'Late').length;
+                        const totalHours = monthRecords.reduce((sum, r) => sum + (r.hours || 0), 0);
+                        const avgHours = monthRecords.length > 0 ? totalHours / monthRecords.length : 0;
+
+                        // Update stats
+                        document.getElementById('totalDays').innerText = daysInMonth;
+                        document.getElementById('presentDays').innerText = presentDays;
+                        document.getElementById('absentDays').innerText = absentDays;
+                        document.getElementById('lateDays').innerText = lateDays;
+                        document.getElementById('totalHoursMonth').innerText = totalHours.toFixed(1) + ' hrs';
+                        document.getElementById('avgHours').innerText = avgHours.toFixed(1) + ' hrs';
+
+                        // Populate monthly table
+                        const monthlyTableBody = document.getElementById('monthlyTableBody');
+                        const days = [];
+                        for (let d = 1; d <= daysInMonth; d++) {
+                            const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+                            const record = monthRecords.find(r => r.date === dateStr);
+                            const dayName = new Date(year, month, d).toLocaleDateString('en-US', { weekday: 'short' });
+
+                            days.push({
+                                date: dateStr,
+                                day: dayName,
+                                checkIn: record?.checkIn ? formatTimeFromDate(record.checkIn) : '--:--',
+                                checkOut: record?.checkOut ? formatTimeFromDate(record.checkOut) : '--:--',
+                                hours: record?.hours ? record.hours.toFixed(1) : '0.0',
+                                status: record?.status || 'Absent',
+                                color: getStatusColor(record?.status || 'Absent')
+                            });
+                        }
+
+                        monthlyTableBody.innerHTML = days.map(day => `
+        <tr>
+            <td>${day.date}</td>
+            <td>${day.day}</td>
+            <td>${day.checkIn}</td>
+            <td>${day.checkOut}</td>
+            <td>${day.hours} hrs</td>
+            <td><span class="status-indicator" style="background:${day.color}20; color:${day.color}">${day.status}</span></td>
+        </tr>
+    `).join('');
+
+                        document.getElementById('monthlyModal').style.display = 'flex';
+                    }
+
+                    function showMonthlySummary() {
+                        const now = new Date();
+                        loadMonthlySummary(now.getFullYear(), now.getMonth());
+                    }
+
+                    // Populate year select
+                    function populateYears() {
+                        const yearSelect = document.getElementById('yearSelect');
+                        const currentYear = new Date().getFullYear();
+                        yearSelect.innerHTML = '';
+                        for (let y = currentYear - 2; y <= currentYear + 1; y++) {
+                            const option = document.createElement('option');
+                            option.value = y;
+                            option.textContent = y;
+                            if (y === currentYear) option.selected = true;
+                            yearSelect.appendChild(option);
+                        }
+                    }
+
+                    // Event listeners
+                    document.getElementById('viewMonthBtn')?.addEventListener('click', showMonthlySummary);
+                    document.getElementById('closeModalBtn')?.addEventListener('click', () => {
+                        document.getElementById('monthlyModal').style.display = 'none';
+                    });
+
+                    document.getElementById('monthSelect')?.addEventListener('change', () => {
+                        const month = parseInt(document.getElementById('monthSelect').value);
+                        const year = parseInt(document.getElementById('yearSelect').value);
+                        loadMonthlySummary(year, month);
+                    });
+
+                    document.getElementById('yearSelect')?.addEventListener('change', () => {
+                        const month = parseInt(document.getElementById('monthSelect').value);
+                        const year = parseInt(document.getElementById('yearSelect').value);
+                        loadMonthlySummary(year, month);
+                    });
+
+                    // Close modal on outside click
+                    document.getElementById('monthlyModal')?.addEventListener('click', (e) => {
+                        if (e.target === document.getElementById('monthlyModal')) {
+                            document.getElementById('monthlyModal').style.display = 'none';
+                        }
+                    });
+
+                    // Initialize
+                    populateYears();
+
     // Initial Load
     loadTodaySession();
     window.addEventListener('beforeunload', () => { if(timerInterval) clearInterval(timerInterval); });

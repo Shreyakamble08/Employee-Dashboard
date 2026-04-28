@@ -1,249 +1,295 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=yes"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <title>HRMS | Attendance Module</title>
     <!-- Font Awesome 6 -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <!-- Google Fonts -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Poppins:wght@500;600;700&display=swap"
-      rel="stylesheet"
-    />
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Poppins:wght@500;600;700&display=swap"
+        rel="stylesheet" />
     <!-- Toastify CSS -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
-    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <link rel="stylesheet" href="../css/attendance.css" />
-  </head>
+</head>
 
-  <body>
+<body>
     <div class="dashboard-container">
-      <!-- Sidebar -->
-      <aside class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-          <div class="logo">
-            <i class="fas fa-briefcase"></i>
-            <span class="logo-text">Employee Portal</span>
-          </div>
-
-          <button
-            class="collapse-btn"
-            id="collapseSidebarBtn"
-            aria-label="Toggle sidebar"
-          >
-            <i class="fas fa-chevron-left"></i>
-          </button>
-        </div>
-        <nav class="sidebar-nav">
-          <ul class="nav-menu">
-            <li>
-              <a href="../pages/dashboard.html" class="nav-link"
-                ><i class="fas fa-chart-pie"></i
-                ><span class="nav-text">Dashboard</span></a
-              >
-            </li>
-            <li>
-              <a href="../pages/profile.html" class="nav-link"
-                ><i class="fas fa-user"></i
-                ><span class="nav-text">Profile</span></a
-              >
-            </li>
-            <li>
-              <a href="../pages/attendance.html" class="nav-link active"
-                ><i class="fas fa-clock"></i
-                ><span class="nav-text">Attendance</span></a
-              >
-            </li>
-            <li>
-              <a href="../pages/expenses.html" class="nav-link"
-                ><i class="fas fa-money-bill"></i
-                ><span class="nav-text">Expenses</span></a
-              >
-            </li>
-            <li>
-              <a href="../pages/leave.html" class="nav-link"
-                ><i class="fas fa-umbrella-beach"></i
-                ><span class="nav-text">Leave</span></a
-              >
-            </li>
-            <li>
-              <a href="../pages/payroll.html" class="nav-link"
-                ><i class="fas fa-money-bill-wave"></i
-                ><span class="nav-text">Payroll</span></a
-              >
-            </li>
-            <li>
-              <a href="#" class="nav-link"
-                ><i class="fas fa-bullhorn"></i
-                ><span class="nav-text">Announcements</span></a
-              >
-            </li>
-          </ul>
-        </nav>
-        <div class="sidebar-footer">
-          <button class="logout-btn" id="logoutBtn">
-            <i class="fas fa-sign-out-alt"></i
-            ><span class="nav-text">Logout</span>
-          </button>
-        </div>
-      </aside>
-      <div class="main-content" id="mainContent">
-        <header class="header">
-          <div class="header-left">
-            <button class="mobile-toggle" id="mobileToggleBtn">
-              <i class="fas fa-bars"></i>
-            </button>
-            <div class="page-title">Attendance Overview</div>
-          </div>
-          <div class="header-right">
-            <div class="notification-bell">
-              <button class="icon-btn">
-                <i class="far fa-bell"></i
-                ><span class="notification-badge">3</span>
-              </button>
-            </div>
-            <div class="user-profile">
-              <button class="profile-btn" id="profileDropdownBtn">
-                <div class="avatar">AM</div>
-                <div class="user-info">
-                  <div class="user-name">Alex Mercer</div>
-                  <div class="user-role">Senior Developer</div>
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-briefcase"></i>
+                    <span class="logo-text">Employee Portal</span>
                 </div>
-                <i class="fas fa-chevron-down"></i>
-              </button>
-              <div class="profile-dropdown" id="profileDropdown">
-                <a href="#" class="dropdown-item"
-                  ><i class="fas fa-user-circle"></i><span>My Profile</span></a
-                >
-                <div class="dropdown-divider"></div>
-                <button class="dropdown-item logout-item">
-                  <i class="fas fa-sign-out-alt"></i><span>Logout</span>
+
+                <button class="collapse-btn" id="collapseSidebarBtn" aria-label="Toggle sidebar">
+                    <i class="fas fa-chevron-left"></i>
                 </button>
-              </div>
             </div>
-          </div>
-        </header>
-
-        <div class="content-wrapper">
-          <div class="stats-grid">
-            <div class="stat-card">
-              <div class="stat-top">
-                <div class="stat-icon primary">
-                  <i class="fas fa-user-check"></i>
+            <nav class="sidebar-nav">
+                <ul class="nav-menu">
+                    <li>
+                        <a href="../pages/dashboard.html" class="nav-link"><i class="fas fa-chart-pie"></i><span
+                                class="nav-text">Dashboard</span></a>
+                    </li>
+                    <li>
+                        <a href="../pages/profile.html" class="nav-link"><i class="fas fa-user"></i><span
+                                class="nav-text">Profile</span></a>
+                    </li>
+                    <li>
+                        <a href="../pages/attendance.html" class="nav-link active"><i class="fas fa-clock"></i><span
+                                class="nav-text">Attendance</span></a>
+                    </li>
+                    <li>
+                        <a href="../pages/expenses.html" class="nav-link"><i class="fas fa-money-bill"></i><span
+                                class="nav-text">Expenses</span></a>
+                    </li>
+                    <li>
+                        <a href="../pages/leave.html" class="nav-link"><i class="fas fa-umbrella-beach"></i><span
+                                class="nav-text">Leave</span></a>
+                    </li>
+                    <li>
+                        <a href="../pages/payroll.html" class="nav-link"><i class="fas fa-money-bill-wave"></i><span
+                                class="nav-text">Payroll</span></a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link"><i class="fas fa-bullhorn"></i><span
+                                class="nav-text">Announcements</span></a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i><span class="nav-text">Logout</span>
+                </button>
+            </div>
+        </aside>
+        <div class="main-content" id="mainContent">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-toggle" id="mobileToggleBtn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="page-title">Attendance Overview</div>
                 </div>
-                <div class="stat-title">Today's Status</div>
-              </div>
-              <div class="stat-value" id="todayStatusText">--</div>
-              <div class="stat-sub" id="lastActionSub">No action yet</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-top">
-                <div class="stat-icon success">
-                  <i class="fas fa-sign-in-alt"></i>
+                <div class="header-right">
+                    <div class="notification-bell">
+                        <button class="icon-btn">
+                            <i class="far fa-bell"></i><span class="notification-badge">3</span>
+                        </button>
+                    </div>
+                    <div class="user-profile">
+                        <button class="profile-btn" id="profileDropdownBtn">
+                            <div class="avatar">AM</div>
+                            <div class="user-info">
+                                <div class="user-name">Alex Mercer</div>
+                                <div class="user-role">Senior Developer</div>
+                            </div>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="profile-dropdown" id="profileDropdown">
+                            <a href="#" class="dropdown-item"><i class="fas fa-user-circle"></i><span>My
+                                    Profile</span></a>
+                            <div class="dropdown-divider"></div>
+                            <button class="dropdown-item logout-item">
+                                <i class="fas fa-sign-out-alt"></i><span>Logout</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div class="stat-title">Check-In</div>
-              </div>
-              <div class="stat-value" id="checkInTimeDisplay">--:--</div>
-              <div class="stat-sub">Clock in</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-top">
-                <div class="stat-icon danger">
-                  <i class="fas fa-sign-out-alt"></i>
+            </header>
+
+            <div class="content-wrapper">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-top">
+                            <div class="stat-icon primary">
+                                <i class="fas fa-user-check"></i>
+                            </div>
+                            <div class="stat-title">Today's Status</div>
+                        </div>
+                        <div class="stat-value" id="todayStatusText">--</div>
+                        <div class="stat-sub" id="lastActionSub">No action yet</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-top">
+                            <div class="stat-icon success">
+                                <i class="fas fa-sign-in-alt"></i>
+                            </div>
+                            <div class="stat-title">Check-In</div>
+                        </div>
+                        <div class="stat-value" id="checkInTimeDisplay">--:--</div>
+                        <div class="stat-sub">Clock in</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-top">
+                            <div class="stat-icon danger">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </div>
+                            <div class="stat-title">Check-Out</div>
+                        </div>
+                        <div class="stat-value" id="checkOutTimeDisplay">--:--</div>
+                        <div class="stat-sub">Clock out</div>
+                    </div>
+                    <div class="stat-card highlight">
+                        <div class="stat-top">
+                            <div class="stat-icon accent"><i class="fas fa-clock"></i></div>
+                            <div class="stat-title">Today's Hours</div>
+                        </div>
+                        <div class="stat-value" id="todayHoursDisplay">0.0 hrs</div>
+                        <div class="stat-sub" id="runningTimerSub">--:--:--</div>
+                    </div>
                 </div>
-                <div class="stat-title">Check-Out</div>
-              </div>
-              <div class="stat-value" id="checkOutTimeDisplay">--:--</div>
-              <div class="stat-sub">Clock out</div>
-            </div>
-            <div class="stat-card highlight">
-              <div class="stat-top">
-                <div class="stat-icon accent"><i class="fas fa-clock"></i></div>
-                <div class="stat-title">Today's Hours</div>
-              </div>
-              <div class="stat-value" id="todayHoursDisplay">0.0 hrs</div>
-              <div class="stat-sub" id="runningTimerSub">--:--:--</div>
-            </div>
-          </div>
 
-          <div class="action-card">
-            <div class="status-badge">
-              <i
-                class="fas fa-circle"
-                style="font-size: 12px; color: var(--primary)"
-              ></i
-              ><span>Current session : </span
-              ><span class="badge" id="sessionBadge">Not Checked In</span>
-              <div id="liveTimer" class="timer-section" style="display: none">
-                00:00:00
-              </div>
-            </div>
-            <div class="btn-group">
-              <button class="btn btn-primary" id="checkInBtn">
-                <i class="fas fa-sign-in-alt"></i> Check In</button
-              ><button class="btn btn-outline" id="checkOutBtn" disabled>
-                <i class="fas fa-sign-out-alt"></i> Check Out
-              </button>
-            </div>
-          </div>
+                <div class="action-card">
+                    <div class="status-badge">
+                        <i class="fas fa-circle" style="font-size: 12px; color: var(--primary)"></i><span>Current
+                            session : </span><span class="badge" id="sessionBadge">Not Checked In</span>
+                        <div id="liveTimer" class="timer-section" style="display: none">
+                            00:00:00
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" id="checkInBtn">
+                            <i class="fas fa-sign-in-alt"></i> Check In</button><button class="btn btn-outline"
+                            id="checkOutBtn" disabled>
+                            <i class="fas fa-sign-out-alt"></i> Check Out
+                        </button>
+                    </div>
+                </div>
 
-          <div class="filter-bar">
-            <div class="filter-group">
-              <label><i class="fas fa-calendar-alt"></i> From</label
-              ><input type="date" id="filterDateFrom" />
-            </div>
-            <div class="filter-group">
-              <label>To</label><input type="date" id="filterDateTo" />
-            </div>
-            <div class="filter-group">
-              <label>Status</label
-              ><select id="filterStatus">
-                <option value="all">All</option>
-                <option value="Present">Present</option>
-                <option value="Absent">Absent</option>
-                <option value="Late">Late</option>
-                <option value="Half Day">Half Day</option>
-              </select>
-            </div>
-            <button class="btn btn-outline" id="resetFiltersBtn">
-              <i class="fas fa-undo-alt"></i> Reset
-            </button>
-          </div>
+                <div class="filter-bar">
+                    <div class="filter-group">
+                        <label><i class="fas fa-calendar-alt"></i> From</label><input type="date" id="filterDateFrom" />
+                    </div>
+                    <div class="filter-group">
+                        <label>To</label><input type="date" id="filterDateTo" />
+                    </div>
+                    <div class="filter-group">
+                        <label>Status</label><select id="filterStatus">
+                            <option value="all">All</option>
+                            <option value="Present">Present</option>
+                            <option value="Absent">Absent</option>
+                            <option value="Late">Late</option>
+                            <option value="Half Day">Half Day</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-outline" id="resetFiltersBtn">
+                        <i class="fas fa-undo-alt"></i> Reset
+                    </button>
+                </div>
 
-          <div class="table-wrapper">
-            <table class="attendance-table">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Check-In</th>
-                  <th>Check-Out</th>
-                  <th>Total Hours</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody id="attendanceTableBody">
-                <tr>
-                  <td colspan="5" style="text-align: center">
-                    Loading history...
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+                <!-- Updated Table Section -->
+                <div class="table-wrapper">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--bg-body); border-bottom: 1px solid var(--border-color);">
+                        <h3 style="font-size: 1rem; font-weight: 600; color: var(--heading);">
+                            <i class="fas fa-calendar-alt" style="margin-right: 8px; color: var(--primary);"></i>
+                            Attendance History
+                        </h3>
+                        <button class="btn-view-month" id="viewMonthBtn"
+                            style="background: var(--primary); color: white; border: none; padding: 0.5rem 1rem; border-radius: 40px; font-size: 0.85rem; cursor: pointer; transition: all 0.2s;">
+                            <i class="fas fa-chart-line"></i> View Monthly Summary
+                        </button>
+                    </div>
+                    <table class="attendance-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Check-In</th>
+                                <th>Check-Out</th>
+                                <th>Total Hours</th>
+                                <th>Status</th>
+                                <th style="width: 80px;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attendanceTableBody">
+                            <tr>
+                                <td colspan="6" style="text-align: center">Loading history...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Monthly Summary Modal Overlay -->
+                <div id="monthlyModal" class="monthly-modal" style="display: none;">
+                    <div class="monthly-modal-content">
+                        <div class="monthly-modal-header">
+                            <h2><i class="fas fa-chart-line"></i> Monthly Attendance Summary</h2>
+                            <button class="modal-close" id="closeModalBtn">&times;</button>
+                        </div>
+                        <div class="monthly-modal-body">
+                            <div class="month-selector">
+                                <select id="monthSelect" class="month-select">
+                                    <option value="0">January</option>
+                                    <option value="1">February</option>
+                                    <option value="2">March</option>
+                                    <option value="3">April</option>
+                                    <option value="4">May</option>
+                                    <option value="5">June</option>
+                                    <option value="6">July</option>
+                                    <option value="7">August</option>
+                                    <option value="8">September</option>
+                                    <option value="9">October</option>
+                                    <option value="10">November</option>
+                                    <option value="11">December</option>
+                                </select>
+                                <select id="yearSelect" class="year-select"></select>
+                            </div>
+                            <div class="monthly-stats">
+                                <div class="stat-box">
+                                    <div class="stat-label">Total Working Days</div>
+                                    <div class="stat-number" id="totalDays">0</div>
+                                </div>
+                                <div class="stat-box">
+                                    <div class="stat-label">Days Present</div>
+                                    <div class="stat-number success" id="presentDays">0</div>
+                                </div>
+                                <div class="stat-box">
+                                    <div class="stat-label">Days Absent</div>
+                                    <div class="stat-number danger" id="absentDays">0</div>
+                                </div>
+                                <div class="stat-box">
+                                    <div class="stat-label">Late Arrivals</div>
+                                    <div class="stat-number warning" id="lateDays">0</div>
+                                </div>
+                                <div class="stat-box highlight">
+                                    <div class="stat-label">Total Hours Worked</div>
+                                    <div class="stat-number primary" id="totalHoursMonth">0.0 hrs</div>
+                                </div>
+                                <div class="stat-box">
+                                    <div class="stat-label">Average Hours/Day</div>
+                                    <div class="stat-number" id="avgHours">0.0 hrs</div>
+                                </div>
+                            </div>
+                            <div class="monthly-table-wrapper">
+                                <table class="monthly-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Day</th>
+                                            <th>Check-In</th>
+                                            <th>Check-Out</th>
+                                            <th>Hours</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="monthlyTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
     <script src="../js/attendance.js"></script>
-  </body>
+</body>
+
 </html>
