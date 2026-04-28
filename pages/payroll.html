@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HRMS | Payroll & Payslips</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Poppins:wght@500;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <!-- jsPDF for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <link rel="stylesheet" href="../css/payroll.css">
+
+</head>
+
+<body>
+    <div class="dashboard-container">
+
+        <!-- SIDEBAR -->
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+
+
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-briefcase"></i>
+                    <span class="logo-text">Employee Portal</span>
+                </div>
+
+                <button class="collapse-btn" id="collapseSidebarBtn" aria-label="Toggle sidebar">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul class="nav-menu">
+                    <li>
+                        <a href="#" class="nav-link"><i class="fas fa-chart-pie"></i><span
+                                class="nav-text">Dashboard</span></a>
+                    </li>
+                    <li>
+                        <a href="../pages/profile.html" class="nav-link"><i class="fas fa-user"></i><span
+                                class="nav-text">Profile</span></a>
+                    </li>
+                    <li>
+                        <a href="../pages/attendance.html" class="nav-link"><i class="fas fa-clock"></i><span
+                                class="nav-text">Attendance</span></a>
+                    </li>
+                    <li>
+                        <a href="../pages/expenses.html" class="nav-link"><i class="fas fa-money-bill"></i><span
+                                class="nav-text">Expenses</span></a>
+                    </li>
+                    <li>
+                        <a href="../pages/leave.html" class="nav-link"><i class="fas fa-umbrella-beach"></i><span
+                                class="nav-text">Leave</span></a>
+                    </li>
+                    <li>
+                        <a href="../pages/payroll.html" class="nav-link active"><i
+                                class="fas fa-money-bill-wave"></i><span class="nav-text">Payroll</span></a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link"><i class="fas fa-bullhorn"></i><span class="nav-text">Company
+                                Policies</span></a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i><span class="nav-text">Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- MAIN -->
+        <div class="main-content" id="mainContent">
+
+            <!-- HEADER -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-toggle" id="mobileToggleBtn"><i class="fas fa-bars"></i></button>
+                    <div class="page-title">Salary & Payslips</div>
+                </div>
+                <div class="header-right">
+                    <div class="notification-bell">
+                        <button class="icon-btn"><i class="far fa-bell"></i><span
+                                class="notification-badge">3</span></button>
+                    </div>
+                    <div class="user-profile">
+                        <button class="profile-btn" id="profileDropdownBtn">
+                            <div class="avatar">AM</div>
+                            <div class="user-info">
+                                <div class="user-name">Alex Mercer</div>
+                                <div class="user-role">Senior Developer</div>
+                            </div>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="profile-dropdown" id="profileDropdown">
+                            <a href="#" class="dropdown-item"><i class="fas fa-user-circle"></i><span>My
+                                    Profile</span></a>
+                            <div class="dropdown-divider"></div>
+                            <button class="dropdown-item logout-item"><i
+                                    class="fas fa-sign-out-alt"></i><span>Logout</span></button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- CONTENT -->
+            <div class="content-wrapper">
+
+                <!-- Summary Cards -->
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <div class="summary-icon teal"><i class="fas fa-rupee-sign"></i></div>
+                        <div class="summary-info">
+                            <div class="summary-label">Annual CTC</div>
+                            <div class="summary-value">₹12,00,000</div>
+                            <div class="summary-sub">FY 2024–25</div>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon green"><i class="fas fa-wallet"></i></div>
+                        <div class="summary-info">
+                            <div class="summary-label">Last Net Pay</div>
+                            <div class="summary-value">₹77,542</div>
+                            <div class="summary-sub">March 2025</div>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon orange"><i class="fas fa-piggy-bank"></i></div>
+                        <div class="summary-info">
+                            <div class="summary-label">YTD Deductions</div>
+                            <div class="summary-value">₹1,12,450</div>
+                            <div class="summary-sub">PF + Tax + Others</div>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon red"><i class="fas fa-file-invoice"></i></div>
+                        <div class="summary-info">
+                            <div class="summary-label">Payslips Available</div>
+                            <div class="summary-value">6 Months</div>
+                            <div class="summary-sub">Oct 2024 – Mar 2025</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payslip List -->
+                <div class="payroll-section">
+                    <div class="payroll-section-header">
+                        <h2><i class="fas fa-file-invoice-dollar"></i> My Payslips</h2>
+                        <!-- <div class="filter-bar">
+                            <select class="filter-select" id="yearFilter">
+                                <option value="2025">FY 2024–25</option>
+                                <option value="2024">FY 2023–24</option>
+                            </select>
+                        </div> -->
+                    </div>
+                    <div class="payslip-grid" id="payslipGrid"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-box">
+            <div class="payslip-doc" id="payslipDocContent"></div>
+            <div class="modal-actions">
+                <button class="btn-modal-close" id="closeModalBtn"><i class="fas fa-times"></i> Close</button>
+                <button class="btn-download-pdf" id="downloadPdfBtn"><i class="fas fa-download"></i> Download
+                    PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/payroll.js"></script>
+
+</body>
+
+</html>

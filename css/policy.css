@@ -435,7 +435,7 @@
         .page-header h1 {
             font-size: 1.8rem;
             font-weight: 600;
-            color: var(--heading);
+            color: var(--primary);
             display: flex;
             align-items: center;
             gap: 12px;
@@ -625,7 +625,7 @@
         .detail-title h2 {
             font-size: 1.6rem;
             font-weight: 600;
-            color: var(--heading);
+            color: var(--primary-dark);
         }
 
         .detail-actions {
@@ -690,12 +690,12 @@
 
         .detail-content {
             line-height: 1.6;
-            color: var(--text-dark);
+            color: var(--primary-dark);
         }
 
         .detail-content h3 {
             margin: 1.2rem 0 0.6rem;
-            color: var(--heading);
+            color: var(--primary-dark);
         }
 
         .detail-content ul {
