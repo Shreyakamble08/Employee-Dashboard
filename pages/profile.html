@@ -1,252 +1,218 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile - Employee Dashboard</title>
-    
-    <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" href="../css/sidebar.css">
-    <link rel="stylesheet" href="../css/header.css">
-    
-    <style>
-        .profile-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .profile-header {
-            background: white;
-            border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: var(--shadow-sm);
-            display: flex;
-            align-items: center;
-            gap: 30px;
-        }
-        
-        .profile-avatar {
-            position: relative;
-        }
-        
-        .profile-avatar img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-        
-        .change-avatar-btn {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 35px;
-            height: 35px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .profile-info h2 {
-            font-size: 28px;
-            margin-bottom: 5px;
-        }
-        
-        .profile-info .role {
-            color: var(--text-secondary);
-            font-size: 16px;
-            margin-bottom: 10px;
-        }
-        
-        .profile-details {
-            background: white;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: var(--shadow-sm);
-        }
-        
-        .detail-section {
-            margin-bottom: 30px;
-        }
-        
-        .detail-section h3 {
-            font-size: 18px;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--border-color);
-        }
-        
-        .detail-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-        
-        .detail-item label {
-            display: block;
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin-bottom: 5px;
-        }
-        
-        .detail-item .value {
-            font-size: 16px;
-            color: var(--text-primary);
-            font-weight: 500;
-        }
-        
-        .edit-btn {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        
-        @media (max-width: 768px) {
-            .profile-header {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .detail-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>HRMS | Employee Profile Module</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Poppins:wght@500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <link rel="stylesheet" href="../css/profile.css">
+    <!-- Toastify CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
 </head>
+
 <body>
     <div class="dashboard-container">
-        <div class="main-content">
-            <div class="content-wrapper">
-                <div class="profile-container">
-                    <div class="profile-header">
-                        <div class="profile-avatar">
-                            <img src="../assets/icons/avatar-placeholder.svg" alt="Profile" id="profileAvatar">
-                            <button class="change-avatar-btn" onclick="changeAvatar()">
-                                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M16 3L17 4L4 17L3 16L16 3Z"/>
-                                    <path d="M14 3L17 6L15 8L12 5L14 3Z"/>
-                                </svg>
+
+   <!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-header">
+        <div class="logo">
+            <i class="fas fa-briefcase"></i>
+            <span class="logo-text">Employee Portal</span>
+        </div>
+
+        <button class="collapse-btn" id="collapseSidebarBtn" aria-label="Toggle sidebar">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+    </div>
+
+    <!-- IMPORTANT: added sidebar-nav -->
+    <nav class="sidebar-nav">
+        <ul class="nav-menu">
+
+            <li>
+                <a href="#" class="nav-link">
+                    <i class="fas fa-chart-pie"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#" class="nav-link active">
+                    <i class="fas fa-user"></i>
+                    <span class="nav-text">Profile</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="../pages/attendance.html" class="nav-link">
+                    <i class="fas fa-clock"></i>
+                    <span class="nav-text">Attendance</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#" class="nav-link">
+                    <i class="fas fa-money-bill"></i>
+                    <span class="nav-text">Expenses</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#" class="nav-link">
+                    <i class="fas fa-umbrella-beach"></i>
+                    <span class="nav-text">Leave</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#" class="nav-link">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span class="nav-text">Payroll</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#" class="nav-link">
+                    <i class="fas fa-bullhorn"></i>
+                    <span class="nav-text">Announcements</span>
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+
+    <!-- CLEAN FOOTER -->
+    <div class="sidebar-footer">
+        <button class="logout-btn" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="nav-text">Logout</span>
+        </button>
+    </div>
+
+</aside>
+
+        <div class="main-content" id="mainContent">
+
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-toggle" id="mobileToggleBtn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="page-title">Employee Profile</div>
+                </div>
+
+                <div class="header-right">
+
+                    <!-- Notification -->
+                    <div class="notification-bell">
+                        <button class="icon-btn" id="notificationBtn">
+                            <i class="far fa-bell"></i>
+                            <span class="notification-badge">3</span>
+                        </button>
+                    </div>
+
+                    <!-- User Profile -->
+                    <div class="user-profile">
+                        <button class="profile-btn" id="profileDropdownBtn">
+
+                            <div class="avatar" id="userAvatar">AM</div>
+
+                            <div class="user-info">
+                                <div class="user-name" id="userName">Alex Mercer</div>
+                                <div class="user-role" id="userRole">Senior Developer</div>
+                            </div>
+
+                            <i class="fas fa-chevron-down dropdown-arrow"></i>
+                        </button>
+
+                        <!-- Dropdown -->
+                        <div class="profile-dropdown" id="profileDropdown">
+
+                            <a href="#" class="dropdown-item">
+                                <i class="fas fa-user-circle"></i>
+                                <span>My Profile</span>
+                            </a>
+
+                            <div class="dropdown-divider"></div>
+
+                            <button class="dropdown-item logout-item">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>Logout</span>
                             </button>
-                        </div>
-                        <div class="profile-info">
-                            <h2 id="profileName">John Doe</h2>
-                            <div class="role" id="profileRole">Senior Developer</div>
-                            <div class="department" id="profileDepartment">Engineering Department</div>
+
                         </div>
                     </div>
-                    
-                    <div class="profile-details">
-                        <div class="detail-section">
-                            <h3>Personal Information</h3>
-                            <div class="detail-grid">
-                                <div class="detail-item">
-                                    <label>Full Name</label>
-                                    <div class="value" id="fullName">John Doe</div>
-                                </div>
-                                <div class="detail-item">
-                                    <label>Email</label>
-                                    <div class="value" id="email">john.doe@company.com</div>
-                                </div>
-                                <div class="detail-item">
-                                    <label>Phone</label>
-                                    <div class="value" id="phone">+1 (555) 123-4567</div>
-                                </div>
-                                <div class="detail-item">
-                                    <label>Date of Birth</label>
-                                    <div class="value" id="dob">March 15, 1990</div>
-                                </div>
-                                <div class="detail-item">
-                                    <label>Address</label>
-                                    <div class="value" id="address">123 Main St, New York, NY 10001</div>
-                                </div>
-                            </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <div class="stepper-container">
+                    <div class="stepper" id="stepper"></div>
+                </div>
+                <div class="profile-content-card">
+                    <div class="profile-header">
+                        <h2>
+                            <i class="fas fa-id-card"></i>
+                            <span id="stepTitle">Personal Information</span>
+                        </h2>
+                        <div class="btn-wrapper">
+                            <button class="btn-edit" id="editModeBtn">
+                                <i class="fas fa-pen"></i> Edit
+                            </button>
+
+                            <button class="btn-save" id="saveModeBtn" style="display: none">
+                                <i class="fas fa-save"></i> Save
+                            </button>
+
+                            <button class="btn-cancel" id="cancelModeBtn" style="display: none">
+                                <i class="fas fa-times"></i> Cancel
+                            </button>
                         </div>
-                        
-                        <div class="detail-section">
-                            <h3>Employment Information</h3>
-                            <div class="detail-grid">
-                                <div class="detail-item">
-                                    <label>Employee ID</label>
-                                    <div class="value" id="employeeId">EMP-2022-001</div>
-                                </div>
-                                <div class="detail-item">
-                                    <label>Department</label>
-                                    <div class="value" id="department">Engineering</div>
-                                </div>
-                                <div class="detail-item">
-                                    <label>Position</label>
-                                    <div class="value" id="position">Senior Developer</div>
-                                </div>
-                                <div class="detail-item">
-                                    <label>Join Date</label>
-                                    <div class="value" id="joinDate">January 15, 2022</div>
-                                </div>
-                                <div class="detail-item">
-                                    <label>Manager</label>
-                                    <div class="value" id="manager">Sarah Johnson</div>
-                                </div>
-                                <div class="detail-item">
-                                    <label>Employment Type</label>
-                                    <div class="value" id="employmentType">Full-time</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <button class="edit-btn" onclick="editProfile()">Edit Profile</button>
+                    </div>
+                    <div id="stepContainer"></div>
+                    <div class="step-navigation">
+                        <button class="btn-nav btn-prev" id="prevBtn">
+                            <i class="fas fa-chevron-left"></i> Previous</button><button class="btn-nav btn-next"
+                            id="nextBtn">
+                            Next <i class="fas fa-chevron-right"></i>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
-    <script src="../js/mockData.js"></script>
-    <script src="../js/common.js"></script>
-    <script src="../js/sidebar.js"></script>
-    <script src="../js/header.js"></script>
-    
-    <script>
-        window.addEventListener('dashboard-ready', () => {
-            loadProfileData();
-        });
-        
-        function loadProfileData() {
-            const user = MockData.user;
-            
-            document.getElementById('profileName').textContent = user.name;
-            document.getElementById('profileRole').textContent = user.role;
-            document.getElementById('profileDepartment').textContent = `${user.department} Department`;
-            document.getElementById('fullName').textContent = user.name;
-            document.getElementById('email').textContent = user.email;
-            document.getElementById('phone').textContent = user.phone;
-            document.getElementById('address').textContent = user.address;
-            document.getElementById('department').textContent = user.department;
-            document.getElementById('position').textContent = user.role;
-            document.getElementById('joinDate').textContent = new Date(user.joinDate).toLocaleDateString('en-US', {
-                year: 'numeric', month: 'long', day: 'numeric'
-            });
-            
-            if (user.avatar) {
-                document.getElementById('profileAvatar').src = user.avatar;
-            }
-        }
-        
-        function editProfile() {
-            window.dashboardManager?.showSuccess('Profile editing feature coming soon!');
-        }
-        
-        function changeAvatar() {
-            window.dashboardManager?.showSuccess('Avatar change feature coming soon!');
-        }
-    </script>
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-box">
+            <h3 id="modalTitle">Add Record</h3>
+            <div class="modal-body" id="modalBody"></div>
+            <div class="modal-actions">
+                <button class="btn-cancel-modal" id="cancelModalBtn" style="padding: 10px 20px; border-radius: 40px">
+                    Cancel</button><button class="btn-save-modal" id="saveModalBtn" style="
+              padding: 10px 20px;
+              border-radius: 40px;
+              background: var(--primary);
+              color: white;
+              border: none;
+            ">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/profile.js"></script>
 </body>
+
 </html>
