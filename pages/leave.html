@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>HRMS | Leave Management Portal</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Poppins:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Toastify CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="../css/leave.css">
+
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-briefcase"></i>
+                    <span class="logo-text">Employee Portal</span>
+                </div>
+
+                <button class="collapse-btn" id="collapseSidebarBtn" aria-label="Toggle sidebar">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul class="nav-menu">
+                    <li>
+                        <a href="../pages/dashboard.html" class="nav-link"><i class="fas fa-chart-pie"></i><span
+                                class="nav-text">Dashboard</span></a>
+                    </li>
+                    <li>
+                        <a href="../pages/profile.html" class="nav-link"><i class="fas fa-user"></i><span
+                                class="nav-text">Profile</span></a>
+                    </li>
+                    <li>
+                        <a href="../pages/attendance.html" class="nav-link"><i class="fas fa-clock"></i><span
+                                class="nav-text">Attendance</span></a>
+                    </li>
+                    <li>
+                        <a href="../pages/expenses.html" class="nav-link"><i class="fas fa-money-bill"></i><span
+                                class="nav-text">Expenses</span></a>
+                    </li>
+                    <li>
+                        <a href="../pages/leave.html" class="nav-link active"><i class="fas fa-umbrella-beach"></i><span
+                                class="nav-text">Leave</span></a>
+                    </li>
+                    <li>
+                        <a href="../pages/payroll.html" class="nav-link"><i class="fas fa-money-bill-wave"></i><span
+                                class="nav-text">Payroll</span></a>
+                    </li>
+                    <li>
+                        <a href="../pages/policies.html" class="nav-link"><i class="fas fa-file-contract"></i><span
+                                class="nav-text">Company Policies</span></a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i><span class="nav-text">Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <div class="main-content" id="mainContent">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-toggle" id="mobileToggleBtn"><i class="fas fa-bars"></i></button>
+                    <div class="page-title">Leave Management</div>
+                </div>
+                <div class="header-right">
+                    <div class="notification-bell">
+                        <button class="icon-btn"><i class="far fa-bell"></i><span class="notification-badge"
+                                id="pendingBadge">0</span></button>
+                    </div>
+                    <div class="user-profile">
+                        <button class="profile-btn" id="profileDropdownBtn">
+                            <div class="avatar">AM</div>
+                            <div class="user-info">
+                                <div class="user-name">Alex Mercer</div>
+                                <div class="user-role">Senior Developer</div>
+                            </div>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="profile-dropdown" id="profileDropdown">
+                            <a href="#" class="dropdown-item"><i class="fas fa-user-circle"></i><span>My
+                                    Profile</span></a>
+                            <button class="dropdown-item logout-item"><i
+                                    class="fas fa-sign-out-alt"></i><span>Logout</span></button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <div class="stats-grid">
+
+                    <!-- TOTAL -->
+                    <div class="stat-card stat-total">
+                        <div class="stat-label">Total Allotted</div>
+                        <div class="stat-value" id="statTotal">18</div>
+                        <div class="stat-sub">days this year</div>
+                    </div>
+
+                    <!-- USED -->
+                    <div class="stat-card stat-used">
+                        <div class="stat-label">Leaves Taken</div>
+                        <div class="stat-value" id="statUsed">4</div>
+                        <div class="stat-sub">approved leaves</div>
+                    </div>
+
+                    <!-- BALANCE -->
+                    <div class="stat-card stat-remaining">
+                        <div class="stat-label">Balance Left</div>
+                        <div class="stat-value" id="statRemaining">14</div>
+                        <div class="stat-sub">days available</div>
+                    </div>
+
+                    <!-- PENDING -->
+                    <div class="stat-card stat-pending">
+                        <div class="stat-label">Pending Requests</div>
+                        <div class="stat-value" id="statPending">2</div>
+                        <div class="stat-sub">awaiting approval</div>
+                    </div>
+
+                </div>
+
+                <!-- TOP ACTIONS -->
+                <div class="top-actions">
+
+                    <!-- Action Card (Upgraded UI) -->
+                    <div class="action-card">
+
+                        <div class="action-left">
+                            <div class="action-icon">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+
+                            <div>
+                                <div class="action-title">Quick Leave Request</div>
+                            </div>
+                        </div>
+
+                        <button class="btn-primary" id="openApplyBtn">
+                            <i class="fas fa-plus"></i>
+                            New Request
+                        </button>
+
+                    </div>
+
+                    <!-- Tabs -->
+                    <div class="tab-nav">
+                        <button class="tab-btn active" data-tab="overview">Overview</button>
+                        <button class="tab-btn" data-tab="myapplications">My Applications</button>
+                        <button class="tab-btn" data-tab="balance">Leave Balance</button>
+                        <button class="tab-btn" data-tab="calendar">Calendar</button>
+                    </div>
+
+                </div>
+
+                <!-- Overview Tab -->
+                <div id="tab-overview" class="tab-content active">
+
+                    <!-- Quick balance cards -->
+                    <div id="quickBalanceCards"
+                        style="display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); margin-bottom:16px;">
+                    </div>
+
+                    <div class="overview-grid">
+
+                        <!-- Recent Applications -->
+                        <div class="section-card recent-card">
+                            <div class="card-header">
+                                <h4>Recent Applications</h4>
+                                <button class="btn-link-sm" onclick="switchTab('myapplications')">
+                                    View All →
+                                </button>
+                            </div>
+
+                            <div id="recentList" class="card-body"></div>
+                        </div>
+
+                        <!-- Usage Chart -->
+                        <div class="section-card chart-card">
+
+                            <div class="card-header">
+                                <h4><i class="fas fa-chart-pie"></i> Usage Overview</h4>
+
+                                <!-- RIGHT SIDE (legend + stats) -->
+                                <div class="chart-right">
+
+                                    <div class="chart-summary">
+                                        <span><strong id="chartUsed">0</strong> Used</span>
+                                        <span><strong id="chartRemaining">0</strong> Left</span>
+                                    </div>
+
+                                    <!-- CUSTOM LEGEND -->
+                                    <div class="chart-legend">
+                                        <span><i style="background:#1f6f7f"></i> Casual</span>
+                                        <span><i style="background:#6faf2e"></i> Sick</span>
+                                        <span><i style="background:#5fafc2"></i> Earned</span>
+                                        <span><i style="background:#f59e0b"></i> Bereavement</span>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="chart-body">
+                                <canvas id="miniDonutChart"></canvas>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- My Applications Tab -->
+                <div id="tab-myapplications" class="tab-content">
+                    <div class="section-card">
+                        <div
+                            style="display:flex;color: #1f6f7f;  justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+                            <strong>All Leave Requests</strong>
+                            <div style="display:flex; gap:8px;">
+                                <select id="filterStatusApp"
+                                    style="border:1px solid var(--border-color); border-radius:30px; padding:6px 12px;">
+                                    <option value="all">All Status</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="approved">Approved</option>
+                                    <option value="rejected">Rejected</option>
+                                    <option value="cancelled">Cancelled</option>
+                                </select>
+                                <select id="filterTypeApp"
+                                    style="border:1px solid var(--border-color); border-radius:30px; padding:6px 12px;"></select>
+                                <button id="exportLeavesBtn" class="btn-export">
+                                    <i class="fas fa-download"></i>
+                                    Export
+                                </button>
+                            </div>
+                        </div>
+                        <div class="overflow-auto">
+                            <table class="attendance-table">
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>From</th>
+                                        <th>To</th>
+                                        <th>Days</th>
+                                        <th>Reason</th>
+                                        <th>Applied</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="appTableBody"></tbody>
+                            </table>
+                            <div id="appEmptyMsg" style="display:none; text-align:center; padding:32px;">No leave
+                                applications found.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Balance Tab -->
+                <div id="tab-balance" class="tab-content">
+                    <div id="balanceCardsGrid"
+                        style="display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); margin-bottom:1.5rem;">
+                    </div>
+                    <div class="section-card"><strong>Approved Leaves History</strong>
+                        <div id="approvedHistoryList" style="margin-top:12px;"></div>
+                    </div>
+                </div>
+
+               <div id="tab-calendar" class="tab-content">
+    <div class="section-card calendar-container">
+
+        <!-- Header with unique class names -->
+        <div class="calendar-header-wrapper">
+            <h3 id="calTitle">April 2025</h3>
+            <div class="calendar-nav-group">
+                <button id="prevMonthBtn" class="calendar-nav-btn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button id="nextMonthBtn" class="calendar-nav-btn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Calendar Grid -->
+        <div id="calendarGrid" class="calendar-grid"></div>
+
+        <!-- Legend -->
+        <div class="calendar-legend">
+            <div class="legend-item approved"><span></span> Approved</div>
+            <div class="legend-item pending"><span></span> Pending</div>
+            <div class="legend-item rejected"><span></span> Rejected</div>
+        </div>
+
+    </div>
+</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Apply Modal -->
+    <div id="applyModal" class="modal">
+        <div class="modal-content">
+            <div
+                style="background:var(--primary); padding:20px; border-radius:24px 24px 0 0; color:white; display:flex; justify-content:space-between;">
+                <span><strong>Apply for Leave</strong><br><small>Submit request</small></span><button
+                    id="closeApplyModalBtn"
+                    style="background:rgba(255,255,255,0.2); border:none; border-radius:50%; width:32px; height:32px; color:white;">&times;</button>
+            </div>
+            <div style="padding:24px;">
+                <div style="background:#F8FAFC; padding:12px; border-radius:16px; margin-bottom:20px;">
+                    <div class="avatar" style="display:inline-block; margin-right:10px;">AM</div> <strong>Alex
+                        Mercer</strong> · EMP001
+                </div>
+                <div class="form-group">
+                    <label>Leave Type *</label>
+                    <select id="modalLeaveType"></select>
+                </div>
+
+                <div class="row-2">
+                    <div class="form-group">
+                        <label>From Date</label>
+                        <input type="date" id="modalFrom">
+                    </div>
+
+                    <div class="form-group">
+                        <label>To Date</label>
+                        <input type="date" id="modalTo">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Days</label>
+                    <input type="number" id="modalDays" readonly>
+                </div>
+
+                <div id="balanceWarning"></div>
+
+                <div class="form-group">
+                    <label>Reason *</label>
+                    <input type="text" id="modalReason" placeholder="Reason for leave">
+                </div>
+                <div class="modal-actions">
+                    <button id="submitLeaveBtn" class="btn-primary">
+                        <i class="fas fa-paper-plane"></i>
+                        Submit Request
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/leave.js"></script>
+
+</body>
+
+</html>
