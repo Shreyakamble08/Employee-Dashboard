@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>HRMS | Expense Management Portal</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Poppins:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Toastify CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="../css/expenses.css">
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-briefcase"></i>
+                    <span class="logo-text">Employee Portal</span>
+                </div>
+                <button class="collapse-btn" id="collapseSidebarBtn"><i class="fas fa-chevron-left"></i></button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul class="nav-menu">
+                    <li><a href="#" class="nav-link"><i class="fas fa-chart-pie"></i><span
+                                class="nav-text">Dashboard</span></a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-user"></i><span
+                                class="nav-text">Profile</span></a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-clock"></i><span
+                                class="nav-text">Attendance</span></a></li>
+                    <li><a href="#" class="nav-link active"><i class="fas fa-money-bill"></i><span
+                                class="nav-text">Expenses</span></a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-umbrella-beach"></i><span
+                                class="nav-text">Leave</span></a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-money-bill-wave"></i><span
+                                class="nav-text">Payroll</span></a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i><span
+                        class="nav-text">Logout</span></button>
+            </div>
+        </aside>
+
+        <div class="main-content" id="mainContent">
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-toggle" id="mobileToggleBtn"><i class="fas fa-bars"></i></button>
+                    <div class="page-title">Expense Management</div>
+                </div>
+                <div class="header-right">
+                    <div class="notification-bell">
+                        <button class="icon-btn"><i class="far fa-bell"></i><span class="notification-badge"
+                                id="pendingBadge">0</span></button>
+                    </div>
+                    <div class="user-profile">
+                        <button class="profile-btn" id="profileDropdownBtn">
+                            <div class="avatar">AM</div>
+                            <div class="user-info">
+                                <div class="user-name">Alex Mercer</div>
+                                <div class="user-role">Senior Developer</div>
+                            </div>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="profile-dropdown" id="profileDropdown">
+                            <button class="dropdown-item"><i class="fas fa-user-circle"></i><span>My
+                                    Profile</span></button>
+                            <button class="dropdown-item logout-item"><i
+                                    class="fas fa-sign-out-alt"></i><span>Logout</span></button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card stat-total">
+                        <div class="stat-label">Total Expenses (Monthly)</div>
+                        <div class="stat-value" id="totalMonthly">₹0</div>
+                        <div class="stat-sub">this month</div>
+                    </div>
+                    <div class="stat-card stat-pending">
+                        <div class="stat-label">Pending Approvals</div>
+                        <div class="stat-value" id="pendingAmount">₹0</div>
+                        <div class="stat-sub">awaiting review</div>
+                    </div>
+                    <div class="stat-card stat-approved">
+                        <div class="stat-label">Approved Expenses</div>
+                        <div class="stat-value" id="approvedAmount">₹0</div>
+                        <div class="stat-sub">total approved</div>
+                    </div>
+                    <div class="stat-card stat-rejected">
+                        <div class="stat-label">Rejected Claims</div>
+                        <div class="stat-value" id="rejectedAmount">₹0</div>
+                        <div class="stat-sub">total rejected</div>
+                    </div>
+                </div>
+
+                <!-- Chart Section -->
+                <div class="chart-row">
+                    <h4><i class="fas fa-chart-line"></i> Monthly Expense Trend</h4>
+                    <canvas id="expenseChart" height="100" style="max-height: 200px;"></canvas>
+                </div>
+
+                <!-- Actions & Filters -->
+                <div class="table-actions">
+                    <div class="search-bar"><i class="fas fa-search"></i><input type="text" id="searchInput"
+                            placeholder="Search by title..."></div>
+                    <div class="filters">
+                        <select id="filterCategory" class="filter-select">
+                            <option value="">All Categories</option>
+                            <option>Travel</option>
+                            <option>Food</option>
+                            <option>Office</option>
+                            <option>Other</option>
+                        </select>
+                        <select id="filterStatus" class="filter-select">
+                            <option value="">All Status</option>
+                            <option>Pending</option>
+                            <option>Approved</option>
+                            <option>Rejected</option>
+                        </select>
+                        <input type="date" id="filterFrom" class="filter-date" placeholder="From">
+                        <input type="date" id="filterTo" class="filter-date" placeholder="To">
+                        <button class="btn-primary" id="addExpenseBtn"><i class="fas fa-plus"></i> Add Expense</button>
+                        <button class="btn-primary btn-outline" id="exportBtn"><i class="fas fa-file-csv"></i> Export
+                            CSV</button>
+                    </div>
+                </div>
+
+                <!-- Expense Table -->
+                <div class="expense-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Expense Title</th>
+                                <th>Category</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody"></tbody>
+                    </table>
+                    <div class="pagination" id="pagination"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Modal -->
+    <div id="expenseModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <strong id="modalTitle">Add New Expense</strong>
+                <button class="modal-close" id="closeModalBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="expenseForm">
+                    <input type="hidden" id="expenseId">
+                    <div class="form-group"><label>Expense Title *</label><input type="text" id="title"
+                            placeholder="e.g., Flight ticket, Office supplies" required></div>
+                    <div class="form-group"><label>Amount (₹) *</label><input type="number" id="amount" step="0.01"
+                            placeholder="0.00" required></div>
+                    <div class="form-group"><label>Category</label><select id="category">
+                            <option>Travel</option>
+                            <option>Food</option>
+                            <option>Office</option>
+                            <option>Other</option>
+                        </select></div>
+                    <div class="form-group"><label>Date *</label><input type="date" id="expenseDate" required></div>
+                    <div class="form-group"><label>Description</label><textarea id="description" rows="2"
+                            placeholder="Optional details..."></textarea></div>
+                    <div class="form-group"><label>Upload Receipt</label><input type="file" id="receiptFile"
+                            accept="image/*"></div>
+                    <div id="receiptPreview" class="receipt-preview"></div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-primary btn-outline" id="cancelModalBtn">Cancel</button>
+                        <button type="submit" class="btn-primary" id="submitExpenseBtn">Submit</button>
+                        <button type="button" class="btn-primary" id="draftBtn" style="background:#6c757d;">Save as
+                            Draft</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detail Modal -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <strong>Expense Details</strong>
+                <button class="modal-close" id="closeDetailBtn">&times;</button>
+            </div>
+            <div class="modal-body" id="detailContent"></div>
+        </div>
+    </div>
+
+
+</body>
+
+<script src="../js/expenses.js"></script>
+
+</html>
